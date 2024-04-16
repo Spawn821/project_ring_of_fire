@@ -1,0 +1,14 @@
+<section class="table">
+
+    <div class="card_stack">
+        @for (card of [0,1,2,3,4,5,6]; track card) {
+            @if (card < 6) {
+                <img [ngStyle]="{'right.px': card * 10, 'top.px': -card * 2.5}" src="assets/graphics/card_cover.png" alt="card image">
+            }
+            @else {
+                <img (click)="tackeCard()" [class.pick_card]="pickCardAnimation" [ngStyle]="{'right.px': card * 10, 'top.px': -card * 2.5}" src="assets/graphics/card_cover.png" alt="card image">
+            }
+        }
+    </div>
+
+</section>

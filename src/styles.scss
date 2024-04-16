@@ -1,3 +1,14 @@
 body {
     margin: 0;
 }
+
+.font_boogaloo {
+    font-family: 'Boogaloo';
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'Boogaloo';
+    font-style: normal;
+    src: url('assets/font/Boogaloo-Regular.ttf');
+}
