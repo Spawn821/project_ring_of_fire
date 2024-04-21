@@ -12,9 +12,10 @@ import { Game } from '../models/game.model';
 export class GameComponent {
 
   pickCardAnimation: boolean = false;
-  currentCard: string | undefined= '';
+  drawnCard!: string;
   game!: Game;
   lastStackIndex: number = 0;
+  lastPlayedCardsIndex: number = 0;
 
   ngOnInit(): void {
     this.newGame();
@@ -27,10 +28,14 @@ export class GameComponent {
 
   tackeCard() {
     if (!this.pickCardAnimation) {
-      this.currentCard = this.game.stack.pop();
+      this.drawnCard = this.game.stack.pop() || '';
       this.pickCardAnimation = true;
     }
 
-    setTimeout(() => this.pickCardAnimation = false, 1500);
+    setTimeout(() => this.pickCardAnimation = false, 1000);
+  }
+
+  playedCards() {
+    setTimeout(() => this.game.playCard.push(this.drawnCard), 1000);
   }
 }

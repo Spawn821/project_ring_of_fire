@@ -2,12 +2,6 @@
     display: none;
 }
 
-span {
-    position: absolute;
-    z-index: 99;
-    font-size: 32px;
-}
-
 .table {
     display: flex;
     justify-content: center;
@@ -42,13 +36,11 @@ span {
     }
 }
 
-.pick_card {
-    animation: pick_card_animation 1s ease-in-out;
-
-    transform: scale(1) translateX(140px) translateY(-280px) rotate(15deg);
+.drawn_card {
+    animation: drawn_card_animation 1s ease-in-out;
 }
 
-@keyframes pick_card_animation {
+@keyframes drawn_card_animation {
     0% {
         transform: scale(1);
     }
@@ -62,6 +54,10 @@ span {
     }
 
     100% {
-        transform: scale(1) translateX(140px) translateY(-280px) rotate(15deg);
+        transform: scale(1) translateX(140px) translateY(-320px) rotate(15deg);
     }
+}
+
+.play_card {
+    transform: scale(1) translateX(140px) translateY(-320px) rotate(15deg);
 }

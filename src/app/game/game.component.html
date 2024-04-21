@@ -1,18 +1,29 @@
 <section class="table">
 
     <div class="card_stack">
+        <!-- card stack -->
         @for (card of game.stack; track card; let lastCard = $last; let index = $index) {
-            @if (!lastCard) {
-                <img [ngStyle]="{'right.px': index * 0.5, 'top.px': -index * 0.5}" src="assets/graphics/card_cover.png" alt="card image">
-            }
-            @else {
-                <img (click)="tackeCard()" class="top_card" [ngStyle]="{'right.px': index * 0.5, 'top.px': -index * 0.5}" src="assets/graphics/card_cover.png" alt="card image">
-                <span>{{index}}</span>
-            }
+        @if (!lastCard) {
+        <img [ngStyle]="{'right.px': index * 0.5, 'top.px': -index * 0.5}" src="assets/graphics/card_cover.png"
+            alt="card image">
+        }
+        @else {
+        <img (click)="tackeCard(); playedCards()" class="top_card"
+            [ngStyle]="{'right.px': index * 0.5, 'top.px': -index * 0.5}" src="assets/graphics/card_cover.png"
+            alt="card image">
+        }
         }
 
+        <!-- played cards -->
+        @for (card of game.playCard; track card; let index = $index) {
+        <img class="play_card" [ngStyle]="{'right.px': lastStackIndex * index * 0.5}" src="assets/graphics/{{card}}.png"
+            alt="card image">
+        }
+
+        <!-- drawn card -->
         @if (pickCardAnimation) {
-            <img (click)="tackeCard()" class="pick_card" [ngStyle]="{'right.px': lastStackIndex * 0.5, 'top.px': -lastStackIndex * 0.5}" src="assets/graphics/{{currentCard}}.png" alt="card image">
+        <img class="drawn_card" [ngStyle]="{'right.px': lastStackIndex * 0.5}" src="assets/graphics/{{drawnCard}}.png"
+            alt="card image">
         }
     </div>
 
