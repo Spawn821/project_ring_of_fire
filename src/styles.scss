@@ -6,9 +6,13 @@ body {
     font-family: 'Boogaloo';
 }
 
+@import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
+
 @font-face {
     font-display: swap;
     font-family: 'Boogaloo';
     font-style: normal;
     src: url('assets/font/Boogaloo-Regular.ttf');
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

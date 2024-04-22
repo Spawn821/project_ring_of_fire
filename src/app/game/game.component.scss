@@ -1,5 +1,11 @@
-.d_none {
-    display: none;
+.player_arrangement {
+    position: absolute;
+    right: 0;
+    top: 160px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
 .table {
@@ -60,4 +66,10 @@
 
 .play_card {
     transform: scale(1) translateX(140px) translateY(-320px) rotate(15deg);
+}
+
+.btn_add {
+    position: absolute;
+    right: 32px;
+    bottom: 32px;
 }

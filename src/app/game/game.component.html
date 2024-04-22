@@ -1,3 +1,9 @@
+<section class="player_arrangement">
+    @for (player of game.players; track player) {
+    <app-player [player]="player" />
+    }
+</section>
+
 <section class="table">
 
     <div class="card_stack">
@@ -28,3 +34,7 @@
     </div>
 
 </section>
+
+<button mat-fab (click)="openDialog()" color="primary" class="btn_add">
+    <mat-icon>add</mat-icon>
+</button>
