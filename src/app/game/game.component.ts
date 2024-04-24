@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Game } from '../models/game.model';
 import { PlayerComponent } from '../player/player.component';
+import { GameTaskComponent } from '../game-task/game-task.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
@@ -22,6 +23,7 @@ import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player
   imports: [
     CommonModule,
     PlayerComponent,
+    GameTaskComponent,
     MatIconModule,
     MatDividerModule,
     MatButtonModule,
@@ -36,6 +38,7 @@ export class GameComponent {
   drawnCard!: string;
   game!: Game;
   lastStackIndex: number = 0;
+  player: number = 1;
 
   constructor(public dialog: MatDialog) {
 
@@ -60,14 +63,22 @@ export class GameComponent {
   }
 
   playedCards() {
-    setTimeout(() => this.game.playCard.push(this.drawnCard), 1000);
+    setTimeout(() => {
+      this.game.playCard.push(this.drawnCard);
+      this.setPlayer();
+    }, 1000);
+  }
+
+  setPlayer() {
+    this.game.currentPlayer = this.player % this.game.players.length;
+    this.player++;
   }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogAddPlayerComponent);
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+    dialogRef.afterClosed().subscribe((name: string) => {
+      if (name) this.game.players.push(name);
     });
   }
 }

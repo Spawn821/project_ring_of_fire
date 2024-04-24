@@ -1,18 +1,20 @@
 .player {
+    width: 200px;
+
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     gap: 16px;
 
-    background-color: burlywood;
+    background-color: lightgray;
 
-    border-top-left-radius: 60px;
-    border-bottom-left-radius: 60px;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
 
     padding: 8px 16px;
 
     &>img {
-        width: 120px;
+        width: 60px;
         object-fit: contain;
         border-radius: 50%;
     }
@@ -20,4 +22,8 @@
     &>span {
         font-size: 32px;
     }
+}
+
+.active_player {
+    background-color: burlywood;
 }

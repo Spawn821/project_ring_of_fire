@@ -68,6 +68,13 @@
     transform: scale(1) translateX(140px) translateY(-320px) rotate(15deg);
 }
 
+.game_task {
+    position: absolute;
+    left: 32px;
+    right: 120px;
+    bottom: 32px;
+}
+
 .btn_add {
     position: absolute;
     right: 32px;

@@ -1,6 +1,11 @@
 <section class="player_arrangement">
-    @for (player of game.players; track player) {
+    @for (player of game.players; track player; let index = $index) {
+    @if (index == game.currentPlayer) {
+    <app-player [player]="player" [activePlayer]="true" />
+    }
+    @else {
     <app-player [player]="player" />
+    }
     }
 </section>
 
@@ -22,7 +27,7 @@
 
         <!-- played cards -->
         @for (card of game.playCard; track card; let index = $index) {
-        <img class="play_card" [ngStyle]="{'right.px': lastStackIndex * index * 0.5}" src="assets/graphics/{{card}}.png"
+        <img class="play_card" [ngStyle]="{'right.px': lastStackIndex * index * 0.25}" src="assets/graphics/{{card}}.png"
             alt="card image">
         }
 
@@ -34,6 +39,8 @@
     </div>
 
 </section>
+
+<app-game-task class="game_task" [drawnCard]="drawnCard" />
 
 <button mat-fab (click)="openDialog()" color="primary" class="btn_add">
     <mat-icon>add</mat-icon>
