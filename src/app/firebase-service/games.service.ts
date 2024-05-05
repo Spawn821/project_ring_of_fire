@@ -46,7 +46,7 @@ export class GamesService {
     }
   }
 
-  async addGame(game: Object) {
+  async addGame(game: any) {
     await addDoc(this.getGamesRef(), this.setGameObject(game, '')).catch(
       (err) => {console.log(err)}
     ).then(
@@ -57,10 +57,10 @@ export class GamesService {
   }
 
   subGames() {
-    return onSnapshot(this.getGamesRef(), (games) => {
-      this.games = [];
-      games.forEach((game) => {
-        this.games.push(this.setGameObject(game.data(), game.id));
+    return onSnapshot(this.getGamesRef(), (list) => {
+      //this.games = [];
+      list.forEach((item) => {
+        this.games.push(this.setGameObject(item.data(), item.id));
       })
     });
   }

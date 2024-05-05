@@ -20,9 +20,8 @@ export class StartScreenComponent {
   }
 
   async newGame() {
-    this.game = new Game();
-    await this.gameService.addGame(this.game);
-    //setTimeout(() => this.router.navigateByUrl('game/' + 'CAu3qhOM87l64G60Kt87'), 500);
-    this.router.navigateByUrl('game/' + 'CAu3qhOM87l64G60Kt87');
+    //this.game = new Game();
+    //await this.gameService.addGame(this.game);
+    this.router.navigateByUrl('game/' + 'c0A9iia6fqeene7d6iIa');
   }
 }

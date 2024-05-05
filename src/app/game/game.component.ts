@@ -48,18 +48,14 @@ export class GameComponent {
   }
 
   newGame() {
-    try {
-      this.route.params.subscribe((params) => {
-        this.gameService.games.forEach((game) => {
-          if (game.id == params['id']) {
-            this.game = game;
-            this.lastStackIndex = this.game.stack.length - 1;
-          }
-        });
-      })
-    } catch (err) {
-      console.log(err);
-    }
+    this.route.params.subscribe((params) => {
+      this.gameService.games.forEach((game) => {
+        if (game.id == params['id']) {
+          this.game = game;
+          this.lastStackIndex = this.game.stack.length - 1;
+        }
+      });
+    })
   }
 
   tackeCard() {
