@@ -74,6 +74,17 @@
             }
         }
     }
+
+    &>button {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+
+        width: 150px;
+        height: 50px;
+
+        cursor: pointer;
+    }
 }
 
 .img_animation {

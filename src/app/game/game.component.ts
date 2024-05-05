@@ -16,6 +16,8 @@ import {
   MatDialogClose,
 } from '@angular/material/dialog';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
+import { GamesService } from '../firebase-service/games.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-game',
@@ -40,17 +42,24 @@ export class GameComponent {
   lastStackIndex: number = 0;
   player: number = 1;
 
-  constructor(public dialog: MatDialog) {
-
-  }
-
-  ngOnInit(): void {
+  constructor(private route: ActivatedRoute, public dialog: MatDialog, private gameService: GamesService) {
     this.newGame();
+    console.log(this.game);
   }
 
   newGame() {
-    this.game = new Game();
-    this.lastStackIndex = this.game.stack.length - 1;
+    try {
+      this.route.params.subscribe((params) => {
+        this.gameService.games.forEach((game) => {
+          if (game.id == params['id']) {
+            this.game = game;
+            this.lastStackIndex = this.game.stack.length - 1;
+          }
+        });
+      })
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   tackeCard() {
