@@ -32,15 +32,15 @@
         }
 
         <!-- drawn card -->
-        @if (pickCardAnimation) {
-        <img class="drawn_card" [ngStyle]="{'right.px': lastStackIndex * 0.5}" src="assets/graphics/{{drawnCard}}.png"
+        @if (this.game.pickCardAnimation) {
+        <img class="drawn_card" [ngStyle]="{'right.px': lastStackIndex * 0.5}" src="assets/graphics/{{this.game.drawnCard}}.png"
             alt="card image">
         }
     </div>
 
 </section>
 
-<app-game-task class="game_task" [drawnCard]="drawnCard" />
+<app-game-task class="game_task" [drawnCard]="this.game.drawnCard" />
 
 <button mat-fab (click)="openDialog()" color="primary" class="btn_add">
     <mat-icon>add</mat-icon>

@@ -20,8 +20,8 @@ export class StartScreenComponent {
   }
 
   async newGame() {
-    //this.game = new Game();
-    //await this.gameService.addGame(this.game);
-    this.router.navigateByUrl('game/' + 'c0A9iia6fqeene7d6iIa');
+    this.game = new Game();
+    await this.gameService.addGame(this.game);
+    this.router.navigateByUrl('game/' + this.gameService.currentDocId);
   }
 }

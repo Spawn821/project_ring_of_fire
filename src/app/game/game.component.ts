@@ -18,6 +18,7 @@ import {
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
 import { GamesService } from '../firebase-service/games.service';
 import { ActivatedRoute } from '@angular/router';
+import { GameStructure } from '../interfaces/gameStructure';
 
 @Component({
   selector: 'app-game',
@@ -36,54 +37,77 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class GameComponent {
 
-  pickCardAnimation: boolean = false;
-  drawnCard!: string;
   game!: Game;
   lastStackIndex: number = 0;
   player: number = 1;
+  gameId!: string;
 
   constructor(private route: ActivatedRoute, public dialog: MatDialog, private gameService: GamesService) {
     this.newGame();
-    console.log(this.game);
   }
 
   newGame() {
-    this.route.params.subscribe((params) => {
-      this.gameService.games.forEach((game) => {
-        if (game.id == params['id']) {
-          this.game = game;
-          this.lastStackIndex = this.game.stack.length - 1;
-        }
-      });
+    this.game = new Game();
+
+    this.route.params.subscribe(async (params) => {
+      this.gameId = params['id'];
+      let subSingleDoc = this.gameService.subSingleDoc('games', this.gameId);
+      let singleDocDate: any = await this.gameService.getSingleDocData('games', this.gameId);
+      console.log(this.gameService.game);
+      this.setGame(this.gameService.game);
     })
+
+    this.lastStackIndex = this.game.stack.length - 1;
+  }
+
+  setGame(game: GameStructure): void {
+    this.game.players = game.players,
+      this.game.stack = game.stack,
+      this.game.playCard = game.playCard,
+      this.game.currentPlayer = game.currentPlayer
+      this.game.pickCardAnimation = game.pickCardAnimation,
+      this.game.drawnCard = game.drawnCard
+  }
+
+  updateGame() {
+    this.gameService.updateGame(this.game, this.gameId);
   }
 
   tackeCard() {
-    if (!this.pickCardAnimation) {
-      this.drawnCard = this.game.stack.pop() || '';
-      this.pickCardAnimation = true;
+    if (!this.game.pickCardAnimation) {
+      this.game.drawnCard = this.game.stack.pop() || '';
+      this.game.pickCardAnimation = true;
+      this.updateGame();
     }
 
-    setTimeout(() => this.pickCardAnimation = false, 1000);
+    setTimeout(() => {
+      this.game.pickCardAnimation = false
+      this.updateGame();
+    }, 1000);
   }
 
   playedCards() {
     setTimeout(() => {
-      this.game.playCard.push(this.drawnCard);
+      this.game.playCard.push(this.game.drawnCard);
       this.setPlayer();
+      this.updateGame();
     }, 1000);
   }
 
   setPlayer() {
     this.game.currentPlayer = this.player % this.game.players.length;
     this.player++;
+    this.updateGame();
   }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogAddPlayerComponent);
 
     dialogRef.afterClosed().subscribe((name: string) => {
-      if (name) this.game.players.push(name);
+      if (name) {
+        this.game.players.push(name);
+        this.updateGame();
+      }
     });
   }
 }

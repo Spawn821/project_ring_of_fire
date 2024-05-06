@@ -7,27 +7,21 @@ import { Firestore, collection, onSnapshot, doc, addDoc, getDoc, updateDoc } fro
 })
 export class GamesService {
 
-  unsubGames;
-  games: GameStructure[] = [];
-
+  game!: GameStructure;
+  currentDocId!: string;
   firestore: Firestore = inject(Firestore);
 
   constructor() { 
-    this.unsubGames = this.subGames();
-    //this.unsubscribe();
   }
 
-  unsubscribe() {
-    this.unsubGames();
-  }
-
-  setGameObject(object: any, id: string): GameStructure {
+  setGameObject(object: any): GameStructure {
     return {
-      id: id,
       players: object.players,
       stack: object.stack,
       playCard: object.playCard,
-      currentPlayer: object.currentPlayer
+      currentPlayer: object.currentPlayer,
+      pickCardAnimation: object.pickCardAnimation,
+      drawnCard: object.drawnCard
     }
   }
 
@@ -42,27 +36,21 @@ export class GamesService {
       players: game.players,
       stack: game.stack,
       playCard: game.playCard,
-      currentPlayer: game.currentPlayer
+      currentPlayer: game.currentPlayer,
+      pickCardAnimation: game.pickCardAnimation,
+      drawnCard: game.drawnCard
     }
   }
 
   async addGame(game: any) {
-    await addDoc(this.getGamesRef(), this.setGameObject(game, '')).catch(
+    await addDoc(this.getGamesRef(), this.setGameObject(game)).catch(
       (err) => {console.log(err)}
     ).then(
       (docRef) => {
         console.log('Document written with ID: ', docRef?.id);
+        this.currentDocId = docRef!.id;
       }
     );
-  }
-
-  subGames() {
-    return onSnapshot(this.getGamesRef(), (list) => {
-      //this.games = [];
-      list.forEach((item) => {
-        this.games.push(this.setGameObject(item.data(), item.id));
-      })
-    });
   }
 
   getGamesRef() {
@@ -71,5 +59,17 @@ export class GamesService {
 
   getSingleDocRef(colId: string, docId: string) {
     return doc(collection(this.firestore, colId), docId);
+  }
+
+  async getSingleDocData(colId: string, docId: string) {
+    let docData = await getDoc(this.getSingleDocRef(colId, docId));
+    return docData.data();
+  }
+
+  subSingleDoc(colId: string, docId: string) {
+    return onSnapshot(this.getSingleDocRef(colId, docId), (doc) => {
+      this.game = this.setGameObject(doc.data());
+      console.log('Subscribe data: ', doc.data());
+    });
   }
 }
