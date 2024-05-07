@@ -52,8 +52,7 @@ export class GameComponent {
     this.route.params.subscribe(async (params) => {
       this.gameId = params['id'];
       let subSingleDoc = this.gameService.subSingleDoc('games', this.gameId);
-      let singleDocDate: any = await this.gameService.getSingleDocData('games', this.gameId);
-      console.log(this.gameService.game);
+      let singleDocData: any = await this.gameService.getSingleDocData('games', this.gameId);
       this.setGame(this.gameService.game);
     })
 

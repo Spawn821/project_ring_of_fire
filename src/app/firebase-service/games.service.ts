@@ -69,7 +69,6 @@ export class GamesService {
   subSingleDoc(colId: string, docId: string) {
     return onSnapshot(this.getSingleDocRef(colId, docId), (doc) => {
       this.game = this.setGameObject(doc.data());
-      console.log('Subscribe data: ', doc.data());
     });
   }
 }
